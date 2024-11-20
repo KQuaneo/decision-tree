@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+from joblib import dump, load
 
 # 创建示例数据集
 data = {
@@ -25,7 +26,13 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 tree = DecisionTreeClassifier(max_depth=3, random_state=42)
 tree.fit(X_train, y_train)
 
+# 保存模型
+dump(tree, 'loan_decision_tree.joblib')
+
+# 加载模型
+loaded_model = load('loan_decision_tree.joblib')
+
 # 进行预测
 new_applicant = [[52000, 650, 0.35]]
-prediction = tree.predict(new_applicant)
+prediction = loaded_model.predict(new_applicant)
 print("新申请人贷款审批预测:", "通过" if prediction[0] == 1 else "拒绝")
