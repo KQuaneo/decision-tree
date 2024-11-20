@@ -5,6 +5,10 @@ from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
+# 设置中文字体
+plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
+plt.rcParams['axes.unicode_minus'] = False     # 用来正常显示负号
+
 # 创建示例数据集
 data = {
     'income': [45000, 32000, 65000, 72000, 55000, 38000, 48000, 80000],
@@ -27,8 +31,15 @@ tree.fit(X_train, y_train)
 
 # 可视化决策树
 plt.figure(figsize=(20,10))
-plot_tree(tree, feature_names=['income', 'credit_score', 'debt_ratio'], 
-          class_names=['Rejected', 'Approved'], filled=True)
+plot_tree(tree, 
+          feature_names=['收入', '信用分数', '债务比率'],
+          class_names=['拒绝', '通过'],
+          filled=True,
+          rounded=True,  # 添加圆角
+          fontsize=10,   # 调整字体大小
+          proportion=True,  # 显示样本比例
+          precision=2)    #
+
 plt.show()
 
 # 进行预测
